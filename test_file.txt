@@ -1,0 +1,16 @@
+StudentProfile + +
+StudentLanguage + +
+StudentAbsentOrCame + +
+StudentGrade + +
+ExamSubmission + +
+Exam  + +
+Group + +
+TeacherDepartment + +
+MentorDepartment + +
+HomeworkSubmission + +
+HomeworkGrade + +
+HomeWork + +
+MentorProfile + +
+TeacherProfile + +
+Lesson + +
+LessonMain + +
