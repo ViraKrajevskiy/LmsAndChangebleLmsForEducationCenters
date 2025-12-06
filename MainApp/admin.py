@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
+from .models.News.news_model import NewsModels
 from .models.roles.models_roles import User
 from .models.Lessons.Lesson_Main.Main_lesson_Model import Lesson, LessonMain
 from .models.Lessons.exam.exams import Exam, ExamSubmission
@@ -51,6 +51,7 @@ class UserAdmin(BaseUserAdmin):
 
 # ================= Register Models =================
 admin.site.register(User, UserAdmin)
+admin.site.register(NewsModels)
 admin.site.register(Lesson)
 admin.site.register(LessonMain)
 admin.site.register(Exam)

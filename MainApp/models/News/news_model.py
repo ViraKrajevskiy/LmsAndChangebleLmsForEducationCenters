@@ -7,6 +7,13 @@ class NewsModels(models.Model):
     photo = models.ImageField()
     file = models.FileField()
     
+    USER_TYPES = (
+        ('all', 'Для всех'),
+        ('student', 'Только для студентов'),
+        ('mentor', 'Только для менторов'),
+        ('teacher', 'Только для учителей'),
+    )
+
     def __str__(self):
         return self.title, self.date_field , self.photo
     
