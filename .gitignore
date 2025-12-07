@@ -1,42 +1,41 @@
-# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.so
 
-# Virtual env
+
 .venv/
 env/
 venv/
 
-# IDE
+
 .vscode/
 .idea/
 
-# OS
+
 .DS_Store
 Thumbs.db
 
-# Django
+
 staticfiles/
 media/
 *.log
 *.pot
 
-# Local database
+
 db.sqlite3
 
-# Migrations (кроме __init__.py — оставь!)
+
 **/migrations/*.py
 !**/migrations/__init__.py
 
-# Env variables
+
 .env
 .env.*
 *.env
 
-# Coverage / testing
+
 htmlcov/
 .coverage
 .coverage.*
