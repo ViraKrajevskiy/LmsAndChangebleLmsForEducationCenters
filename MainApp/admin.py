@@ -15,7 +15,6 @@ from .models.Workers.teacher_model import TeacherProfile
 from .models.departaments.departaments import TeacherDepartment
 from .models.Groups.Model_group import Group
 
-# ================= User Form =================
 class UserAdminForm(forms.ModelForm):
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
@@ -31,25 +30,61 @@ class UserAdminForm(forms.ModelForm):
             user.save()
         return user
 
-# ================= User Admin =================
+
+class UserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'role', 'age')
+
+    def clean_password2(self):
+        p1 = self.cleaned_data.get("password1")
+        p2 = self.cleaned_data.get("password2")
+        if p1 and p2 and p1 != p2:
+            raise forms.ValidationError("Пароли не совпадают")
+        return p2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+class UserChangeForm(forms.ModelForm):
+    password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'role', 'age', 'password', 'is_active', 'is_staff', 'is_superuser')
+
+
 class UserAdmin(BaseUserAdmin):
-    form = UserAdminForm
+    form = UserChangeForm
+    add_form = UserCreationForm
+
     list_display = ('username', 'email', 'role', 'is_staff')
     list_filter = ('role', 'is_staff', 'is_superuser')
-    search_fields = ('username', 'email')
-    ordering = ('username',)
+
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password', 'role', 'age')}),
         ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active')}),
     )
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password', 'role', 'age', 'is_staff', 'is_superuser'),
+            'fields': ('username', 'email', 'role', 'age', 'password1', 'password2'),
         }),
     )
 
-# ================= Register Models =================
+    search_fields = ('username', 'email')
+    ordering = ('username',)
+    filter_horizontal = ()
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(NewsModels)
 admin.site.register(Lesson)
