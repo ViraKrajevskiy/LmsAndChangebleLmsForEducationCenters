@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 def login_view(request):
     if request.method == "POST":
@@ -12,7 +11,6 @@ def login_view(request):
         if user:
             login(request, user)
 
-            # Редирект по роли
             if user.is_teacher():
                 return redirect("profile")
             if user.is_student():
@@ -21,7 +19,7 @@ def login_view(request):
                 return redirect("profile")
             print("AUTH:", user)
 
-            return redirect("profile")  # fallback
+            return redirect("profile")  
         print("AUTH:", user)
         return render(request, "auth/login.html", {"error": "Неверный логин или пароль"})
     

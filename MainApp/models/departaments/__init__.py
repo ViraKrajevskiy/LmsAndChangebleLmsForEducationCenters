@@ -1,0 +1,1 @@
+from .departaments import TeacherDepartment

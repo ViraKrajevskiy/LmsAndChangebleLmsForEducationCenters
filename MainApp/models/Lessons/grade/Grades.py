@@ -29,6 +29,3 @@ class HomeworkGrade(models.Model):
 
     def __str__(self):
         return f"{self.student.user.username} — {self.grade}/100"
-
-
-# так смотри нам нужен орм для моделей я скажу щя каким ролям что можно пока просто нужно орм удаление изменение создание просмотр

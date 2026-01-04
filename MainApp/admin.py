@@ -2,18 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models.News.news_model import NewsModels
+
+from .models.groups.Model_group import Group
+from .models.lessons import Lesson, LessonMain, Exam, ExamSubmission, StudentGrade, HomeWork, HomeworkGrade, \
+    HomeworkSubmission, StudentAbsentOrCame
+from .models.news import NewsModels
 from .models.roles.models_roles import User
-from .models.Lessons.Lesson_Main.Main_lesson_Model import Lesson, LessonMain
-from .models.Lessons.exam.exams import Exam, ExamSubmission
-from .models.Lessons.grade.Grades import StudentGrade, HomeworkGrade
-from .models.Lessons.HomeWork.Hw_model_main import HomeWork, HomeworkSubmission
-from .models.Lessons.Lesson_attendance.Student_attandance import StudentAbsentOrCame
-from .models.Students.Model_student import StudentLanguage, StudentProfile
-from .models.Workers.mentor_model import MentorProfile
-from .models.Workers.teacher_model import TeacherProfile
 from .models.departaments.departaments import TeacherDepartment
-from .models.Groups.Model_group import Group
+from .models.students import StudentLanguage, StudentProfile
+from .models.workers.mentor_model import MentorProfile
+from .models.workers.teacher_model import TeacherProfile
+
 
 class UserAdminForm(forms.ModelForm):
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
