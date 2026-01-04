@@ -1,6 +1,7 @@
 from .base import BaseService
 from MainApp.models.departaments.departaments import TeacherDepartment
-from ..models.Workers.teacher_model import TeacherProfile
+from ..models import TeacherProfile
+
 
 class TeacherDepartmentService(BaseService):
     model = TeacherDepartment

@@ -1,4 +1,3 @@
-# services/base_service.py
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from copy import deepcopy
 
@@ -6,7 +5,7 @@ class BaseService:
     model = None
     allowed_roles = None
     user_field_name = None
-    confidential_fields = []  # Список полей, скрываемых для учителя и ментора
+    confidential_fields = []
 
     @classmethod
     def _check_role(cls, user):
@@ -34,14 +33,11 @@ class BaseService:
 
     @classmethod
     def _hide_confidential(cls, user, obj):
-        """
-Скрыть поля из confidential_fields для учителя и ментора
-        """
         if user.role in ["teacher", "mentor"]:
             obj_copy = deepcopy(obj.__dict__)
             for field in cls.confidential_fields:
                 if field in obj_copy:
-                    obj_copy[field] = None  # или ""
+                    obj_copy[field] = None
             return obj_copy
         return obj
 

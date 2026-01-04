@@ -1,5 +1,4 @@
-from MainApp.models.Lessons.HomeWork.Hw_model_main import HomeworkSubmission,HomeWork
-from MainApp.models.Lessons.grade.Grades import HomeworkGrade
+from MainApp.models import HomeworkSubmission, HomeWork, HomeworkGrade
 from MainApp.services.base import BaseService
 
 class HomeworkService(BaseService):

@@ -1,9 +1,9 @@
 from .base import BaseService
-from MainApp.models.departaments.departaments import MentorDepartment
-from ..models.Workers.mentor_model import MentorProfile
+from ..models import MentorProfile, TeacherDepartment
+
 
 class MentorDepartmentService(BaseService):
-    model = MentorDepartment
+    model = TeacherDepartment
 
 class MentorProfileService(BaseService):
     model = MentorProfile

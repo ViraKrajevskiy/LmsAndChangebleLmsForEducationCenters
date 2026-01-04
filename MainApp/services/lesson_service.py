@@ -1,5 +1,6 @@
 from .base import BaseService
-from ..models.Lessons.Lesson_Main.Main_lesson_Model import Lesson, LessonMain
+from ..models import Lesson, LessonMain
+
 
 class LessonService(BaseService):
     model = Lesson

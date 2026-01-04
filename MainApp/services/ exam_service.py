@@ -1,4 +1,4 @@
-from MainApp.models.Lessons.exam.exams import ExamSubmission, Exam
+from MainApp.models import ExamSubmission, Exam
 from .base import BaseService
 
 class ExamSubmissionService(BaseService):
