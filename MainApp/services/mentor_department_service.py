@@ -1,7 +1,6 @@
 from .base import BaseService
 from ..models import MentorProfile, TeacherDepartment
 
-
 class MentorDepartmentService(BaseService):
     model = TeacherDepartment
 

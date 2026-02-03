@@ -9,3 +9,4 @@ class Group(models.Model):
     @property
     def student_count(self):
         return self.students.count()
+ 

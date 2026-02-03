@@ -4,9 +4,9 @@ class NewsModels(models.Model):
     title = models.CharField()
     text_topick = models.TextField()
     date_field = models.DateTimeField(auto_now_add=True)
-    photo = models.ImageField()
+    photo = models.ImageField(null=True, blank=True)
     file = models.FileField()
-    
+
     USER_TYPES = (
         ('all', 'Для всех'),
         ('student', 'Только для студентов'),
@@ -15,5 +15,4 @@ class NewsModels(models.Model):
     )
 
     def __str__(self):
-        return self.title, self.date_field , self.photo
-    
+        return f"{self.title} | {self.date_field}"

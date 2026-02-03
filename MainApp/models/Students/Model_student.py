@@ -2,9 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from MainApp.models.roles.models_roles import User
 from django.core.exceptions import ValidationError
-
 from MainApp.validators.phone_number_validator import phone_validator
-
 
 class StudentLanguage(models.Model):
     language = models.CharField(max_length=30)

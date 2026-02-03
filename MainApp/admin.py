@@ -23,7 +23,6 @@ class UserAdminForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        # Хэшируем пароль перед сохранением
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()

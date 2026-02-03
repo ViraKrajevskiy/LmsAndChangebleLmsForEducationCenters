@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #6366f1;
+    --sidebar-bg: #111827;
+    --bg-main: #f8fafc;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-main);
+    display: flex; /* Важно для расположения сайдбара и контента в ряд */
+    min-height: 100vh;
+}
+
+/* Фиксированный сайдбар */
+.sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    color: white;
+    padding: 30px 20px;
+    position: fixed; /* Замирает слева */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+/* Отступ для контента, чтобы он не уходил под сайдбар */
+.main-content {
+    margin-left: 280px; /* Должно быть равно ширине сайдбара */
+    flex: 1;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка внутри контента */
+.top-bar {
+    height: 70px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid #eef0f7;
+}
+
+.content-wrapper {
+    padding: 40px;
+}
+
+/* Стили навигации */
+.sidebar-nav { list-style: none; padding: 0; margin-top: 30px; }
+.sidebar-nav a {
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    transition: 0.3s;
+    margin-bottom: 5px;
+}
+.sidebar-nav a.active, .sidebar-nav a:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Виджет внизу */
+.user-widget {
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.user-avatar {
+    width: 35px; height: 35px;
+    background: var(--primary);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+}
+.user-name { font-size: 14px; font-weight: 600; margin: 0; }
+.user-role-text { font-size: 11px; color: #6b7280; margin: 0; }

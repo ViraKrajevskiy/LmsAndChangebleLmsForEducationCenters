@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-18#&8#=t!mb4l02=djgqb2yu@ee$vafofno1pwo+lba-68^$)3'
@@ -16,6 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'MainApp',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +67,6 @@ DATABASES = {
 #     }
 # }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -80,8 +82,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LANGUAGES = [
+    ('ru', _('Russian')),
+    ('en', _('English')),
+    ('uz', _('Uzbek')),
+]
 
 LANGUAGE_CODE = 'en-us'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 TIME_ZONE = 'UTC'
 

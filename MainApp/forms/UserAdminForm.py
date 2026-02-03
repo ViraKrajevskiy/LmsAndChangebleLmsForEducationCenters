@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from MainApp.models.roles.models_roles import User
 
 class UserAdminForm(forms.ModelForm):

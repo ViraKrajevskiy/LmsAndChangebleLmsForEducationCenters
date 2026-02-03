@@ -1,88 +1,67 @@
-<!DOCTYPE html>
+{% extends 'base_menu/base.html' %}
 {% load static %}
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Профиль</title>
+
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
+    <h1 class="profile-title">Личный кабинет</h1>
+    <div class="profile-grid">
+        <div class="card">
+            <h2>Основные сведения</h2>
+            <div class="info-box">
+                <label>ФИО</label>
+                <span>({{ user.username }})</span>
+            </div>
+            <div class="info-box">
+                <label>Email / Логин</label>
+                <span>{{ user.email }} </span>
+            </div>
+            <div class="info-box">
+                <label>Статус в системе</label>
+                <span style="color: var(--primary);">{{ user.get_role_display }}</span>
+            </div>
+        </div>
 
-<div class="container">
-
-    <h1>Личный кабинет</h1>
-
-    <div class="card">
-        <h2>Основные данные</h2>
-
-        <p><strong>Имя:</strong> {{ user.first_name }}</p>
-        <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
-
-        {% if user.middle_name %}
-        <p><strong>Отчество:</strong> {{ user.middle_name }}</p>
+        {% if student %}
+        <div class="card">
+            <h2>Учебный профиль</h2>
+            <div class="info-box">
+                <label>Текущая Группа</label>
+                <span>{{ student.group }}</span>
+            </div>
+            <div class="info-box">
+                <label>Курс / Семестр</label>
+                <span>{{ student.course }} курс, {{ student.semester }} семестр</span>
+            </div>
+            <div class="info-box">
+                <label>Изучаемые языки</label>
+                <div style="margin-top: 10px;">
+                    {% for lang in student.languages_with_levels.all %}
+                        <span class="lang-tag">{{ lang.language }} ({{ lang.get_level_display }})</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% elif teacher or mentor %}
+        <div class="card">
+            <h2>Профессиональные данные</h2>
+            {% with p=teacher|default:mentor %}
+            <div class="info-box">
+                <label>Департамент</label>
+                <span>{{ p.department }}</span>
+            </div>
+            <div class="info-box">
+                <label>Специализация</label>
+                <span>{{ p.specialization }}</span>
+            </div>
+            <div class="info-box">
+                <label>Опыт работы</label>
+                <span>{{ p.experience_years }} лет</span>
+            </div>
+            {% endwith %}
+        </div>
         {% endif %}
-
-        <p><strong>Возраст:</strong> {{ user.age }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Логин:</strong> {{ user.username }}</p>
-        <p><strong>Роль:</strong> {{ user.get_role_display }}</p>
-
-        <p><strong>Пароль:</strong> ******</p>
     </div>
-
-
-    {% if student %}
-    <div class="card">
-        <h2>Данные студента</h2>
-
-        <p><strong>Телефон студента:</strong> {{ student.student_phone }}</p>
-        <p><strong>Телефон родителя:</strong> {{ student.parent_phone }}</p>
-        <p><strong>Имя родителя:</strong> {{ student.parent_name }}</p>
-
-        <p><strong>Курс:</strong> {{ student.course }}</p>
-        <p><strong>Семестр:</strong> {{ student.semester }}</p>
-
-        <p><strong>Группа:</strong> {{ student.group }}</p>
-
-        <h3>Языки</h3>
-        <ul>
-            {% for lang in student.languages_with_levels.all %}
-                <li>{{ lang.language }} — {{ lang.get_level_display }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-
-    {% if mentor %}
-    <div class="card">
-        <h2>Данные ментора</h2>
-
-        <p><strong>Телефон:</strong> {{ mentor.mentor_phone }}</p>
-        <p><strong>Специализация:</strong> {{ mentor.specialization }}</p>
-        <p><strong>Опыт (лет):</strong> {{ mentor.experience_years }}</p>
-        <p><strong>Департамент:</strong> {{ mentor.department }}</p>
-        <p><strong>О себе:</strong> {{ mentor.bio }}</p>
-    </div>
-    {% endif %}
-
-
-    {% if teacher %}
-    <div class="card">
-        <h2>Данные учителя</h2>
-
-        <p><strong>Телефон:</strong> {{ teacher.mentor_phone }}</p>
-        <p><strong>Специализация:</strong> {{ teacher.specialization }}</p>
-        <p><strong>Опыт (лет):</strong> {{ teacher.experience_years }}</p>
-        <p><strong>Департамент:</strong> {{ teacher.department }}</p>
-        <p><strong>О себе:</strong> {{ teacher.bio }}</p>
-    </div>
-    {% endif %}
-
-    <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
-
-</div>
-
-</body>
-</html>
+{% endblock %}
