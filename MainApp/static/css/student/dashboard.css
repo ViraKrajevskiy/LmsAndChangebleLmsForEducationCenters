@@ -1,0 +1,80 @@
+.text-navy {
+    color: #1B2559;
+}
+
+.shadow-primary {
+    box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2);
+}
+
+.shadow-sm-hover {
+    transition: all 0.2s ease;
+}
+
+.shadow-sm-hover:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+}
+
+.bg-primary-subtle {
+    background-color: #eef0ff !important;
+}
+
+.btn-white {
+    background: #fff;
+    border: none;
+    color: #1B2559;
+    font-weight: 700;
+}
+
+.timeline .card {
+    border: 1px solid #f4f7fe;
+}
+
+/* Стили для последнего элемента новостей, чтобы не было лишнего отступа */
+.news-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+.badge.bg-primary-subtle {
+    font-size: 10px;
+    padding: 4px 8px;
+}
+/* dashboard.css Дополнение */
+
+.timeline {
+    min-height: 200px;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.shadow-primary {
+    box-shadow: 0 10px 30px -5px rgba(67, 24, 255, 0.3) !important;
+}
+
+.border-start-primary {
+    border-left: 4px solid var(--primary) !important;
+}
+/* Улучшение отображения списка новостей */
+.news-item {
+    padding: 12px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+.news-item:hover {
+    background-color: #f8f9ff;
+}
+
+.news-item i {
+    font-size: 1.2rem;
+}
+
+.bg-primary-subtle {
+    background-color: rgba(67, 24, 255, 0.1) !important;
+    color: #4318ff !important;
+}

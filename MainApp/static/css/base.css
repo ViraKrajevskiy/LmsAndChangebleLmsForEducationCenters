@@ -1,94 +1,107 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
+/* Переменные */
 :root {
-    --primary: #6366f1;
-    --sidebar-bg: #111827;
-    --bg-main: #f8fafc;
-    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    --sidebar-w: 260px;
+    --sidebar-collapsed: 85px;
+    --primary: #4318ff;
+    --bg-dark: #111c44;
+    --navy: #1B2559;
+    --brand-gradient: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
 }
 
 body {
-    margin: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg-main);
-    display: flex; /* Важно для расположения сайдбара и контента в ряд */
-    min-height: 100vh;
+    background: #f4f7fe;
+    margin: 0;
 }
 
-/* Фиксированный сайдбар */
+/* Сайдбар */
 .sidebar {
-    width: 280px;
-    background: var(--sidebar-bg);
-    color: white;
-    padding: 30px 20px;
-    position: fixed; /* Замирает слева */
-    top: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--bg-dark);
+    position: fixed;
+    left: 0; top: 0;
+    transition: all 0.3s ease;
     z-index: 1000;
+    padding: 20px;
 }
 
-/* Отступ для контента, чтобы он не уходил под сайдбар */
-.main-content {
-    margin-left: 280px; /* Должно быть равно ширине сайдбара */
-    flex: 1;
-    width: calc(100% - 280px);
-    min-height: 100vh;
+.sidebar-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    margin-bottom: 2rem;
 }
 
-/* Шапка внутри контента */
-.top-bar {
-    height: 70px;
+.logo-icon {
+    width: 35px; height: 35px;
+    background: var(--primary);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+}
+
+/* Ссылки навигации */
+.nav-link {
+    color: rgba(255, 255, 255, 0.7) !important;
+    padding: 12px 15px !important;
+    border-radius: 12px !important;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white !important;
+}
+
+.nav-link.active {
+    background: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(67, 24, 255, 0.3);
+}
+
+.nav-header {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 20px 0 10px 15px;
+}
+
+/* Основной контент */
+.main-wrapper {
+    margin-left: var(--sidebar-w);
+    transition: all 0.3s ease;
+}
+
+.top-header {
+    height: 75px;
     background: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    border-bottom: 1px solid #eef0f7;
+    padding: 0 30px;
+    position: sticky; top: 0;
 }
 
-.content-wrapper {
-    padding: 40px;
-}
+.user-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.user-role { font-size: 11px; color: #a3aed0; }
 
-/* Стили навигации */
-.sidebar-nav { list-style: none; padding: 0; margin-top: 30px; }
-.sidebar-nav a {
-    color: #9ca3af;
-    text-decoration: none;
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-radius: 10px;
-    transition: 0.3s;
-    margin-bottom: 5px;
-}
-.sidebar-nav a.active, .sidebar-nav a:hover {
+.user-circle {
+    width: 45px; height: 45px;
     background: var(--primary);
-    color: white;
-}
-
-/* Виджет внизу */
-.user-widget {
-    background: rgba(255,255,255,0.05);
-    padding: 12px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.user-avatar {
-    width: 35px; height: 35px;
-    background: var(--primary);
-    border-radius: 8px;
+    border-radius: 50%; color: white;
     display: flex; align-items: center; justify-content: center;
-    font-weight: bold;
+    font-weight: 800; cursor: pointer;
+    border: 3px solid #f4f7fe;
 }
-.user-name { font-size: 14px; font-weight: 600; margin: 0; }
-.user-role-text { font-size: 11px; color: #6b7280; margin: 0; }
+
+/* Переключатель сайдбара */
+#nav-toggle:checked ~ .sidebar { width: var(--sidebar-collapsed); }
+#nav-toggle:checked ~ .sidebar .link-text,
+#nav-toggle:checked ~ .sidebar .logo-text,
+#nav-toggle:checked ~ .sidebar .nav-header { display: none; }
+#nav-toggle:checked ~ .main-wrapper { margin-left: var(--sidebar-collapsed); }
+
+#nav-toggle:checked ~ .sidebar .toggle-btn i { transform: rotate(180deg); }

@@ -1,67 +1,70 @@
 {% extends 'base_menu/base.html' %}
-{% load static %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-{% endblock %}
 
 {% block content %}
-    <h1 class="profile-title">Личный кабинет</h1>
-    <div class="profile-grid">
-        <div class="card">
-            <h2>Основные сведения</h2>
-            <div class="info-box">
-                <label>ФИО</label>
-                <span>({{ user.username }})</span>
-            </div>
-            <div class="info-box">
-                <label>Email / Логин</label>
-                <span>{{ user.email }} </span>
-            </div>
-            <div class="info-box">
-                <label>Статус в системе</label>
-                <span style="color: var(--primary);">{{ user.get_role_display }}</span>
-            </div>
-        </div>
+<div class="container-fluid">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div style="height: 100px; background: linear-gradient(135deg, #4318ff 0%, #b099ff 100%);"></div>
+                <div class="card-body text-center" style="margin-top: -50px;">
+                    <div class="mx-auto shadow border border-5 border-white rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold"
+                         style="width: 100px; height: 100px; font-size: 40px;">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <h3 class="mt-3 fw-bold mb-1">{{ user.username }}</h3>
+                    <p class="text-muted small mb-4">{{ user.email }}</p>
 
-        {% if student %}
-        <div class="card">
-            <h2>Учебный профиль</h2>
-            <div class="info-box">
-                <label>Текущая Группа</label>
-                <span>{{ student.group }}</span>
-            </div>
-            <div class="info-box">
-                <label>Курс / Семестр</label>
-                <span>{{ student.course }} курс, {{ student.semester }} семестр</span>
-            </div>
-            <div class="info-box">
-                <label>Изучаемые языки</label>
-                <div style="margin-top: 10px;">
-                    {% for lang in student.languages_with_levels.all %}
-                        <span class="lang-tag">{{ lang.language }} ({{ lang.get_level_display }})</span>
-                    {% endfor %}
+                    <div class="row border-top pt-3">
+                        <div class="col-6 border-end">
+                            <div class="text-muted small">Возраст</div>
+                            <div class="fw-bold">{{ user.age|default:"20" }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small">Статус</div>
+                            <div class="fw-bold text-primary">{{ user.get_role_display }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {% elif teacher or mentor %}
-        <div class="card">
-            <h2>Профессиональные данные</h2>
-            {% with p=teacher|default:mentor %}
-            <div class="info-box">
-                <label>Департамент</label>
-                <span>{{ p.department }}</span>
+
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h5 class="fw-bold mb-4">Личный кабинет</h5>
+
+                {% if student %}
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-4">
+                            <label class="d-block small text-muted">Группа</label>
+                            <span class="fw-bold text-dark">{{ student.group.name|default:"—" }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-4">
+                            <label class="d-block small text-muted">Курс</label>
+                            <span class="fw-bold text-dark">{{ student.course }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded-4">
+                            <label class="d-block small text-muted">Семестр</label>
+                            <span class="fw-bold text-dark">{{ student.semester }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="alert alert-primary border-0 rounded-4 mb-4">
+                    Добро пожаловать! Здесь ваша основная информация.
+                </div>
+                {% endif %}
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary rounded-pill px-4">Редактировать профиль</button>
+                    <button class="btn btn-outline-secondary rounded-pill px-4">Сменить пароль</button>
+                </div>
             </div>
-            <div class="info-box">
-                <label>Специализация</label>
-                <span>{{ p.specialization }}</span>
-            </div>
-            <div class="info-box">
-                <label>Опыт работы</label>
-                <span>{{ p.experience_years }} лет</span>
-            </div>
-            {% endwith %}
         </div>
-        {% endif %}
     </div>
+</div>
 {% endblock %}

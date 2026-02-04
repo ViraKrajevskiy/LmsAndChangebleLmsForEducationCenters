@@ -1,0 +1,24 @@
+/* schedule.css */
+.text-navy {
+    color: #1B2559;
+}
+
+.border-primary-subtle {
+    border-color: #eef0ff !important;
+}
+
+.card-header h5 {
+    text-transform: capitalize;
+}
+
+.last-child-mb-0:last-child {
+    margin-bottom: 0 !important;
+}
+
+.card {
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}

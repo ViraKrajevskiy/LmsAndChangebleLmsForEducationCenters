@@ -1,0 +1,41 @@
+{% extends 'base_menu/base.html' %}
+{% load static %}
+
+{% block title %}Расписание семестра{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
+
+<div class="container-fluid">
+    <h3 class="fw-bold text-navy mb-4">Расписание группы {{ group.name }}</h3>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        {% for day in schedule_days %}
+        <div class="col">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 py-3 px-4">
+                    <h5 class="fw-bold text-primary mb-0">{{ day.lesson_day|date:"l" }}</h5>
+                    <small class="text-muted">{{ day.lesson_day|date:"d F Y" }}</small>
+                </div>
+                <div class="card-body px-4 pb-4">
+                    {% for lesson in day.lessons.all %}
+                    <div class="d-flex align-items-center mb-3 last-child-mb-0">
+                        <div class="me-3 text-center" style="min-width: 50px;">
+                            <div class="fw-bold text-navy small">{{ lesson.start_time|time:"H:i" }}</div>
+                            <div class="text-muted" style="font-size: 10px;">{{ lesson.end_time|time:"H:i" }}</div>
+                        </div>
+                        <div class="ps-3 border-start border-2 border-primary-subtle">
+                            <div class="fw-bold small text-navy">{{ lesson.title }}</div>
+                            <div class="text-muted" style="font-size: 11px;">{{ lesson.get_lesson_type_display }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Расписание еще не составлено.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

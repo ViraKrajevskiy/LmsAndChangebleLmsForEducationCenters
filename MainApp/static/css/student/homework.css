@@ -1,0 +1,27 @@
+/* homework.css */
+
+.hw-item-row {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.hw-item-row:hover {
+    background-color: #f8f9ff !important;
+}
+
+.status-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 8px;
+}
+
+.text-navy {
+    color: #1B2559;
+    font-weight: 700;
+}
+
+.deadline-warning {
+    color: #ee5d50;
+    font-weight: 600;
+}
