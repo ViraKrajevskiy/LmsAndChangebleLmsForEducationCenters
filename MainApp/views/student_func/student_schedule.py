@@ -9,7 +9,7 @@ from MainApp.models.lessons.lesson_main.Main_lesson_Model import LessonMaterial
 def full_schedule_view(request):
     student_profile = StudentProfile.objects.filter(user=request.user).first()
 
-    # Если профиля нет, можно вернуть пустую страницу или ошибку
+
     if not student_profile:
         return render(request, 'student/full_schedule.html', {'error': 'Профиль не найден'})
 
@@ -27,7 +27,7 @@ def lesson_detail_view(request, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     student = request.user.studentprofile
 
-    # Получаем уже загруженные файлы студента для этого урока
+
     materials = LessonMaterial.objects.filter(lesson=lesson, student=student)
 
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def lesson_detail_view(request, pk):
             messages.error(request, "Ошибка: Максимальное количество загрузок для этого урока (3 файла) достигнуто.")
             return redirect('lesson_detail', pk=pk)
 
-        # Если лимит не превышен, обрабатываем загрузку
+
         title = request.POST.get('title')
         file = request.FILES.get('file')
 

@@ -18,7 +18,7 @@ class Exam(models.Model):
         if self.start_time >= self.end_time:
             raise ValidationError("Время начала экзамена должно быть раньше времени окончания.")
 
-        # Проверяем пересечения по времени для этого учителя
+     
         exams_same_day = Exam.objects.filter(
             date=self.date,
             teacher=self.teacher
@@ -60,17 +60,17 @@ class ExamSubmission(models.Model):
     def clean(self):
             super().clean()
 
-            # Получаем текущее время (aware)
+
             now = timezone.now()
 
-            # 1. Проверяем, существует ли связанный экзамен
+
             if hasattr(self, 'exam') and self.exam:
-                # 2. Соединяем дату экзамена и время окончания в один объект datetime
+
                 exam_end_datetime = timezone.make_aware(
                     datetime.combine(self.exam.date, self.exam.end_time)
                 )
 
-                # 3. Сравниваем: если сейчас время уже больше, чем время окончания экзамена
+
                 if now > exam_end_datetime:
                     raise ValidationError(
                         f"Время сдачи экзамена истекло! Экзамен завершился в {self.exam.end_time}."

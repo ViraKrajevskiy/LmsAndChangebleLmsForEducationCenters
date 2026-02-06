@@ -6,7 +6,7 @@ from MainApp.validators.file_photo_validators import validate_file_extension
 
 class LessonMain(models.Model):
     lesson_day = models.DateField()
-    group = models.ForeignKey("Group", on_delete=models.CASCADE)  # расписание для группы
+    group = models.ForeignKey("Group", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Расписание {self.group.name} — {self.lesson_day}"
@@ -29,16 +29,16 @@ class Lesson(models.Model):
     end_time = models.TimeField()
 
     def clean(self):
-        # Проверяем что начало < конца
+
         if self.start_time >= self.end_time:
             raise ValidationError("Время начала урока должно быть раньше времени окончания.")
-        # Берём все уроки из этого же дня и группы
+
         lessons_same_day = Lesson.objects.filter(
             main=self.main
         ).exclude(id=self.id)
 
         for lesson in lessons_same_day:
-            # Пересечение по времени
+
             if (self.start_time < lesson.end_time) and (self.end_time > lesson.start_time):
                 raise ValidationError(
                     f"Урок пересекается по времени с уроком «{lesson.title}» "
@@ -46,7 +46,7 @@ class Lesson(models.Model):
                 )
 
     def save(self, *args, **kwargs):
-        self.clean()   # обязательно вызывать clean() при сохранении
+        self.clean()  
         super().save(*args, **kwargs)
 
     def __str__(self):

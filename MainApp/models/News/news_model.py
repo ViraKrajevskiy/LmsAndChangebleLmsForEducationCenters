@@ -1,13 +1,13 @@
 from django.db import models
 
 class NewsModels(models.Model):
-    title = models.CharField(max_length=200) # Добавил max_length, он обязателен
+    title = models.CharField(max_length=200)
     text_topick = models.TextField()
     date_field = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(null=True, blank=True)
-    file = models.FileField(null=True, blank=True) # Добавил null/blank для гибкости
+    file = models.FileField(null=True, blank=True)
 
-    # Твой кортеж
+   
     USER_TYPES_CHOICES = (
         ('all', 'Для всех'),
         ('student', 'Только для студентов'),

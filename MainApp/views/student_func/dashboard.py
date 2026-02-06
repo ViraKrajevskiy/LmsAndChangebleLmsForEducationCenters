@@ -12,12 +12,11 @@ def dashboard_view(request):
 
     student_profile = StudentProfile.objects.filter(user=user).select_related('group').first()
 
-    # 1. ФИЛЬТР НОВОСТЕЙ
     news = NewsModels.objects.filter(
         Q(user_role='all') | Q(user_role=user.role)
     ).order_by('-date_field')[:3]
 
-    # 2. ФИЛЬТР УРОКОВ + Оценки за сегодня
+
     lessons_data = []
     if student_profile and student_profile.group:
         current_lessons = Lesson.objects.filter(
@@ -26,7 +25,7 @@ def dashboard_view(request):
         ).order_by('start_time')
 
         for lesson in current_lessons:
-            # Ищем оценку именно за этот урок для этого студента
+
             grade_obj = StudentGrade.objects.filter(student=student_profile, lesson=lesson).first()
 
             lessons_data.append({
@@ -36,10 +35,9 @@ def dashboard_view(request):
                 'grade': grade_obj.grade if grade_obj else None,
             })
 
-    # 3. ПОСЛЕДНИЕ ОЦЕНКИ
     recent_marks = []
     if student_profile:
-        # Оценки за уроки (обычно DateField)
+
         l_grades = StudentGrade.objects.filter(student=student_profile).select_related('lesson__main')\
             .order_by('-id')[:3]
         for g in l_grades:
@@ -47,14 +45,13 @@ def dashboard_view(request):
                 'title': g.lesson.title,
                 'grade': g.grade,
                 'type': 'Урок',
-                'date': g.lesson.main.lesson_day # Это объект date
+                'date': g.lesson.main.lesson_day
             })
 
-        # Оценки за ДЗ (может быть DateTimeField)
+
         h_grades = HomeworkGrade.objects.filter(student=student_profile).select_related('homework__lesson')\
             .order_by('-id')[:3]
         for h in h_grades:
-            # ИСПРАВЛЕНИЕ: Гарантируем, что здесь будет только дата (без времени)
             raw_date = h.homework.dedline
             if isinstance(raw_date, datetime):
                 raw_date = raw_date.date()
@@ -66,7 +63,7 @@ def dashboard_view(request):
                 'date': raw_date
             })
 
-    # Сортировка: теперь все элементы в x['date'] имеют тип datetime.date
+    
     recent_marks = sorted(recent_marks, key=lambda x: x['date'], reverse=True)[:4]
 
     context = {

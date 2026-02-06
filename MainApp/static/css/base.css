@@ -1,4 +1,4 @@
-/* --- Переменные --- */
+
 :root {
     --sidebar-w: 260px;
     --sidebar-collapsed: 85px;
@@ -20,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- САЙДБАР --- */
+
 .sidebar {
     width: var(--sidebar-w);
     height: 100vh;
@@ -51,7 +51,7 @@ body {
     flex-shrink: 0;
 }
 
-/* Навигация */
+
 .nav-link {
     color: rgba(255, 255, 255, 0.7) !important;
     padding: 12px 18px !important;
@@ -81,7 +81,7 @@ body {
     margin: 20px 0 10px 15px;
 }
 
-/* --- Логика Desktop Collapse --- */
+
 #nav-toggle:checked ~ .sidebar {
     width: var(--sidebar-collapsed);
 }
@@ -101,7 +101,7 @@ body {
 #nav-toggle:checked ~ .sidebar .sidebar-header { justify-content: center; }
 #nav-toggle:checked ~ .sidebar .toggle-btn i { transform: rotate(180deg); }
 
-/* --- Основной контент --- */
+
 .main-wrapper {
     margin-left: var(--sidebar-w);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,10 +124,10 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* --- АДАПТИВНОСТЬ (Телефоны) --- */
+
 @media (max-width: 991px) {
     .sidebar {
-        left: calc(-1 * var(--sidebar-w)); /* Скрываем за экран */
+        left: calc(-1 * var(--sidebar-w));
     }
 
     .main-wrapper {
@@ -135,14 +135,14 @@ body {
         width: 100%;
     }
 
-    /* Когда нажат чекбокс на мобилке — показываем сайдбар как оверлей */
+
     #nav-toggle:checked ~ .sidebar {
         left: 0;
         width: var(--sidebar-w) !important;
         box-shadow: 10px 0 30px rgba(0,0,0,0.3);
     }
 
-    /* На мобилке показываем текст всегда, если сайдбар открыт */
+
     #nav-toggle:checked ~ .sidebar .link-text,
     #nav-toggle:checked ~ .sidebar .logo-text,
     #nav-toggle:checked ~ .sidebar .nav-header {
@@ -154,7 +154,7 @@ body {
         padding: 12px 18px !important;
     }
 
-    /* Фон-затемнение при открытии меню на мобилке */
+
     #nav-toggle:checked ~ .mobile-overlay {
         display: block;
     }

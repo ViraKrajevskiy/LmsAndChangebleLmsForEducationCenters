@@ -23,7 +23,7 @@ class StudentLanguageLevel(models.Model):
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES)
 
     class Meta:
-        unique_together = ('student', 'language')  # один язык — один уровень
+        unique_together = ('student', 'language') 
 
     def __str__(self):
         return f"{self.student.user.username}: {self.language} ({self.get_level_display()})"

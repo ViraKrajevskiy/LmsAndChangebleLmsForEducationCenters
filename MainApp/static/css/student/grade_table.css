@@ -1,4 +1,4 @@
-/* static/css/grade_table.css */
+
 
 .text-navy { color: #1B2559; }
 
@@ -33,14 +33,14 @@
     font-size: 16px;
 }
 
-/* Цвета оценок */
+
 .cell-high { background: #05CD99; color: white; box-shadow: 0 4px 10px rgba(5, 205, 153, 0.3); }
 .cell-mid { background: #4318FF; color: white; box-shadow: 0 4px 10px rgba(67, 24, 255, 0.3); }
 .cell-low { background: #EE5D50; color: white; box-shadow: 0 4px 10px rgba(238, 93, 80, 0.3); }
 
 .matrix-empty { color: #CBD5E0; font-size: 11px; font-weight: 600; }
 
-/* Кастомные бейджи */
+
 .badge-custom { padding: 4px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase; }
 .bc-primary { background: #E2E8F0; color: #475569; }
 .bc-info { background: #E0F2FE; color: #0369A1; }

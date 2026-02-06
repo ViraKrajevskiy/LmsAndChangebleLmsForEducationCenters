@@ -1,9 +1,9 @@
-/* Дополнительные стили для загрузки материалов */
+
 
 .border-dashed {
     border-style: dashed !important;
     border-width: 2px !important;
-    border-color: #cbd5e0 !important; /* Серый оттенок под твою палитру */
+    border-color: #cbd5e0 !important;
 }
 
 .transition-hover {
@@ -11,11 +11,11 @@
 }
 
 .transition-hover:hover {
-    background-color: #fff3cd !important; /* Светло-желтый при наведении на ДЗ */
+    background-color: #fff3cd !important;
     transform: translateX(5px);
 }
 
-/* Кнопка открытия файла */
+
 .btn-white {
     background-color: #ffffff;
     color: #1B2559;
@@ -27,7 +27,7 @@
     color: #4318FF;
 }
 
-/* Кастомизация алертов под дизайн */
+
 .alert {
     border: none;
     font-size: 0.9rem;
@@ -43,7 +43,7 @@
     color: #991B1B;
 }
 
-/* Стили для input type="file" внутри формы */
+
 .form-control-sm::file-selector-button {
     background-color: #1B2559;
     color: white;

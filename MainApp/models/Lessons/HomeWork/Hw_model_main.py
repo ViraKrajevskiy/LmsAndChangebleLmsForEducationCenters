@@ -35,12 +35,12 @@ class HomeworkSubmission(models.Model):
         verbose_name_plural = "Задания студентов"
 
     def clean(self):
-        
+
         if not self.homework.allow_late and self.homework.dedline < timezone.now():
             raise ValidationError("Срок сдачи ДЗ истёк. Поздняя сдача запрещена.")
 
     def save(self, *args, **kwargs):
-        self.clean()  # вызываем проверку перед сохранением
+        self.clean()  
         super().save(*args, **kwargs)
 
     def __str__(self):

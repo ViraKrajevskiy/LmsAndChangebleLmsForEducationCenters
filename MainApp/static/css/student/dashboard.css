@@ -1,4 +1,4 @@
-/* --- 1. ПЕРЕМЕННЫЕ И ОБЩИЕ НАСТРОЙКИ --- */
+
 :root {
     --sidebar-w: 260px;
     --sidebar-collapsed: 85px;
@@ -24,7 +24,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- 2. САЙДБАР --- */
+
 .sidebar {
     width: var(--sidebar-collapsed);
     height: 100vh;
@@ -80,7 +80,7 @@ body {
     box-shadow: 0 10px 20px rgba(67, 24, 255, 0.3);
 }
 
-/* --- 3. ОСНОВНОЙ КОНТЕНТ --- */
+
 .main-wrapper {
     margin-left: var(--sidebar-collapsed);
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,7 +91,6 @@ body {
     margin-left: var(--sidebar-w);
 }
 
-/* --- 4. КАРТОЧКИ И ТАЙМЛАЙН --- */
 .text-navy { color: var(--navy); }
 
 .nav-pills .nav-link {
@@ -130,7 +129,7 @@ body {
     box-shadow: 0 10px 20px rgba(67, 24, 255, 0.2) !important;
 }
 
-/* Оценки (Кружки) */
+
 .grade-badge-circle {
     width: 40px; height: 40px;
     border-radius: 50%;
@@ -141,7 +140,7 @@ body {
 .bg-grade-high { background: rgba(5, 205, 153, 0.1); color: #05cd99; }
 .bg-grade-mid { background: rgba(255, 181, 51, 0.1); color: #ffb533; }
 
-/* --- 5. НОВОСТИ (НОВОЕ) --- */
+
 .news-item {
     transition: all 0.2s ease;
     cursor: pointer;
@@ -165,7 +164,7 @@ body {
     text-overflow: ellipsis;
 }
 
-/* --- 6. АДАПТИВНОСТЬ --- */
+
 @media (max-width: 991px) {
     .sidebar { left: -100%; width: var(--sidebar-w) !important; }
     .sidebar.expanded { left: 0 !important; }

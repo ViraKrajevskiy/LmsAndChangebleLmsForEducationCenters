@@ -1,4 +1,4 @@
-/* schedule.css */
+
 
 .text-navy {
     color: #1B2559;
@@ -11,7 +11,7 @@
 .lesson-card-link {
     display: block;
     color: inherit;
-    text-decoration: none; /* Убираем подчеркивание ссылок */
+    text-decoration: none;
 }
 
 .lesson-item {
@@ -47,7 +47,7 @@
     background-color: #eef0ff !important;
 }
 
-/* Стили для иконки стрелочки */
+
 .lesson-item i {
     transition: transform 0.2s;
 }
@@ -57,7 +57,7 @@
     opacity: 1 !important;
 }
 
-/* Стили для темы урока в деталях (если этот файл общий) */
+
 .lesson-topic-text {
     font-size: 1rem;
     line-height: 1.6;

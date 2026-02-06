@@ -85,16 +85,16 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    # Что будет отображаться в списке уроков
+    
     list_display = ('title', 'teacher', 'lesson_type', 'can_upload')
-    # Возможность включать/выключать загрузку прямо из списка (не заходя внутрь)
+
     list_editable = ('can_upload',)
-    # Фильтры справа
+
     list_filter = ('can_upload', 'lesson_type', 'teacher')
-    # Поиск по названию
+
     search_fields = ('title',)
 
-# ... твои классы форм и UserAdmin ...
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(NewsModels)
@@ -115,4 +115,4 @@ admin.site.register(MentorProfile)
 admin.site.register(TeacherProfile)
 admin.site.register(Group)
 admin.site.register(TeacherDepartment)
-admin.site.register(LessonMaterial) # Не забудь зарегистрировать новую модель
+admin.site.register(LessonMaterial)
