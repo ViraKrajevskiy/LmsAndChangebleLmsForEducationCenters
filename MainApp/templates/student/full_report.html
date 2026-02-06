@@ -1,0 +1,79 @@
+{% extends 'base_menu/base.html' %}
+{% load static %}
+
+{% block title %}Успеваемость | LMS PRO{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/student/grade_table.css' %}">
+
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+        <div class="card-header bg-white border-0 p-4">
+            <h5 class="fw-bold text-navy mb-0">Журнал успеваемости</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive journal-container">
+                <table class="table table-bordered align-middle mb-0 journal-table">
+                    <thead>
+                        <tr>
+                            <th class="sticky-subject bg-light">Предмет / Тип занятия</th>
+                            <th class="text-center date-header">Дата</th>
+                            <th class="text-center" style="min-width: 100px;">Оценка</th>
+                            <th>Тема / Комментарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in report %}
+                        <tr>
+                            <td class="sticky-subject fw-bold text-navy bg-white">
+                                <div class="d-flex flex-column">
+                                    {{ item.subject }}
+                                    <span class="badge-custom
+                                        {% if item.type == 'Урок' %}bc-primary
+                                        {% elif item.type == 'Домашняя работа' %}bc-info
+                                        {% else %}bc-warning{% endif %} mt-1" style="font-size: 10px; width: fit-content;">
+                                        {{ item.type }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-center date-header">
+                                <span class="d-block fw-bold">{{ item.date|date:"d.m" }}</span>
+                                <small class="opacity-50 text-uppercase">{{ item.date|date:"D" }}</small>
+                            </td>
+                            <td class="text-center">
+                                {% if item.grade and item.grade != '—' %}
+                                    <div class="matrix-cell
+                                        {% if item.grade >= 90 or item.grade == 5 %}cell-high
+                                        {% elif item.grade >= 70 or item.grade == 4 %}cell-mid
+                                        {% else %}cell-low{% endif %}">
+                                        {{ item.grade|floatformat:0 }}
+                                    </div>
+                                {% else %}
+                                    <div class="matrix-empty">Нет оценки</div>
+                                {% endif %}
+                            </td>
+                            <td class="px-4">
+                                <div class="comment-bubble w-100">
+                                    {% if item.comment %}
+                                        {{ item.comment }}
+                                    {% else %}
+                                        <span class="opacity-50 italic">Запись по теме: {{ item.topic|default:"Без темы" }}</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <div class="text-muted">Оценок пока нет. Учись прилежней! 😊</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models.groups.Model_group import Group
 from .models.lessons import Lesson, LessonMain, Exam, ExamSubmission, StudentGrade, HomeWork, HomeworkGrade, \
     HomeworkSubmission, StudentAbsentOrCame
+from .models.lessons.lesson_main.Main_lesson_Model import LessonMaterial
 from .models.news import NewsModels
 from .models.roles.models_roles import User
 from .models.departaments.departaments import TeacherDepartment
@@ -82,10 +83,24 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('username',)
     filter_horizontal = ()
 
+@admin.register(Lesson)
+class LessonAdmin(admin.ModelAdmin):
+    # Что будет отображаться в списке уроков
+    list_display = ('title', 'teacher', 'lesson_type', 'can_upload')
+    # Возможность включать/выключать загрузку прямо из списка (не заходя внутрь)
+    list_editable = ('can_upload',)
+    # Фильтры справа
+    list_filter = ('can_upload', 'lesson_type', 'teacher')
+    # Поиск по названию
+    search_fields = ('title',)
+
+# ... твои классы форм и UserAdmin ...
 
 admin.site.register(User, UserAdmin)
 admin.site.register(NewsModels)
-admin.site.register(Lesson)
+
+
+
 admin.site.register(LessonMain)
 admin.site.register(Exam)
 admin.site.register(ExamSubmission)
@@ -100,3 +115,4 @@ admin.site.register(MentorProfile)
 admin.site.register(TeacherProfile)
 admin.site.register(Group)
 admin.site.register(TeacherDepartment)
+admin.site.register(LessonMaterial) # Не забудь зарегистрировать новую модель

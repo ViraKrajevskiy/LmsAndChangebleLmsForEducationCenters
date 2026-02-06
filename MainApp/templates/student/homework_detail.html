@@ -1,0 +1,137 @@
+{% extends 'base_menu/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/student/homework_detail.css' %}">
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'homework' %}">Задания</a></li>
+            <li class="breadcrumb-item active text-navy fw-bold">{{ homework.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h3 class="fw-bold text-navy mb-1">{{ homework.title }}</h3>
+                            <p class="text-muted small">
+                                <i class="bi bi-book me-1"></i> {{ homework.lesson.title }}
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-danger-subtle text-danger rounded-pill">
+                                Дедлайн: {{ homework.dedline|date:"d.m.Y H:i" }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <hr class="opacity-25">
+
+                    <div class="homework-description mb-4">
+                        <h5 class="fw-bold text-navy mb-3">Описание задания:</h5>
+                        <div class="text-secondary">
+                            {{ homework.topic|linebreaks }}
+                        </div>
+                    </div>
+
+                    {% if homework.file or homework.photo %}
+                    <div class="teacher-attachments p-3 bg-light rounded-4 border">
+                        <h6 class="fw-bold text-navy mb-3"><i class="bi bi-paperclip me-2"></i>Материалы от учителя:</h6>
+                        <div class="row g-3">
+                            {% if homework.photo %}
+                            <div class="col-12">
+                                <img src="{{ homework.photo.url }}" class="img-fluid rounded-3 shadow-sm" style="max-height: 400px; object-fit: contain;">
+                            </div>
+                            {% endif %}
+
+                            {% if homework.file %}
+                            <div class="col-12">
+                                <a href="{{ homework.file.url }}" class="btn btn-white btn-sm border rounded-pill px-3 shadow-sm" download>
+                                    <i class="bi bi-file-earmark-arrow-down text-primary me-1"></i> Скачать файл задания
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            {% if submission %}
+            <div class="card border-0 shadow-sm rounded-4 mb-4 {% if grade %}border-start border-4 border-primary{% endif %}">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-navy mb-3">Результат проверки</h5>
+                    {% if grade %}
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="display-5 fw-bold text-primary me-3">{{ grade.grade }}</div>
+                            <div>
+                                <div class="small text-muted">Ваша оценка</div>
+                                <div class="text-xs text-muted">{{ grade.created_at|date:"d.m.Y" }}</div>
+                            </div>
+                        </div>
+                        {% if grade.comment %}
+                        <div class="p-3 bg-primary-subtle rounded-3 small text-navy-emphasis">
+                            <i class="bi bi-chat-left-quote me-2"></i><strong>Коммент:</strong> {{ grade.comment }}
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="text-center py-3">
+                            <div class="spinner-border spinner-border-sm text-warning mb-2" role="status"></div>
+                            <div class="small text-muted">Работа на проверке у ментора</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-navy mb-3">{% if submission %}Обновить ответ{% else %}Ваш ответ{% endif %}</h5>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Документ (PDF, DOCX)</label>
+                            <input type="file" name="file" class="form-control form-control-sm rounded-3">
+                            {% if submission.file %}
+                                <div class="mt-1 small"><a href="{{ submission.file.url }}" target="_blank" class="text-decoration-none"><i class="bi bi-file-check me-1"></i> Текущий файл</a></div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Фото работы</label>
+                            <input type="file" name="photo" accept="image/*" class="form-control form-control-sm rounded-3">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Комментарий для учителя</label>
+                            <textarea name="comment" class="form-control form-control-sm rounded-3" rows="4" placeholder="Напишите что-нибудь...">{% if submission %}{{ submission.comment }}{% endif %}</textarea>
+                        </div>
+
+                        {% if submission %}
+                            <div class="alert alert-success border-0 py-2 mb-3" style="font-size: 0.75rem;">
+                                <i class="bi bi-clock-history me-1"></i> Отправлено: {{ submission.submission_date|date:"d.m H:i" }}
+                            </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm transition-hover">
+                            {% if submission %}
+                                <i class="bi bi-arrow-repeat me-1"></i> Пересдать работу
+                            {% else %}
+                                <i class="bi bi-send me-1"></i> Отправить на проверку
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

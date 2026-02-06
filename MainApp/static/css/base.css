@@ -1,29 +1,37 @@
-/* Переменные */
+/* --- Переменные --- */
 :root {
     --sidebar-w: 260px;
     --sidebar-collapsed: 85px;
     --primary: #4318ff;
     --bg-dark: #111c44;
     --navy: #1B2559;
-    --brand-gradient: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background: #f4f7fe;
-    margin: 0;
+    color: var(--navy);
+    overflow-x: hidden;
 }
 
-/* Сайдбар */
+/* --- САЙДБАР --- */
 .sidebar {
     width: var(--sidebar-w);
     height: 100vh;
     background: var(--bg-dark);
     position: fixed;
-    left: 0; top: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    padding: 20px;
+    left: 0;
+    top: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1100;
+    padding: 20px 15px;
+    overflow-x: hidden;
 }
 
 .sidebar-header {
@@ -40,68 +48,131 @@ body {
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-weight: 800;
+    flex-shrink: 0;
 }
 
-/* Ссылки навигации */
+/* Навигация */
 .nav-link {
     color: rgba(255, 255, 255, 0.7) !important;
-    padding: 12px 15px !important;
-    border-radius: 12px !important;
+    padding: 12px 18px !important;
+    border-radius: 15px !important;
     margin-bottom: 5px;
-    transition: 0.2s;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none !important;
+    white-space: nowrap;
 }
 
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white !important;
+.nav-link i {
+    font-size: 1.2rem;
+    min-width: 30px;
 }
 
-.nav-link.active {
-    background: var(--primary) !important;
-    color: white !important;
-    box-shadow: 0 4px 15px rgba(67, 24, 255, 0.3);
-}
+.nav-link:hover { background: rgba(255, 255, 255, 0.08); color: white !important; }
+.nav-link.active { background: var(--primary) !important; color: white !important; }
 
 .nav-header {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 11px;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 10px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 1.5px;
     margin: 20px 0 10px 15px;
 }
 
-/* Основной контент */
+/* --- Логика Desktop Collapse --- */
+#nav-toggle:checked ~ .sidebar {
+    width: var(--sidebar-collapsed);
+}
+
+#nav-toggle:checked ~ .sidebar .link-text,
+#nav-toggle:checked ~ .sidebar .logo-text,
+#nav-toggle:checked ~ .sidebar .nav-header {
+    display: none;
+}
+
+#nav-toggle:checked ~ .sidebar .nav-link {
+    justify-content: center;
+    padding: 12px 0 !important;
+}
+
+#nav-toggle:checked ~ .sidebar .nav-link i { margin: 0; }
+#nav-toggle:checked ~ .sidebar .sidebar-header { justify-content: center; }
+#nav-toggle:checked ~ .sidebar .toggle-btn i { transform: rotate(180deg); }
+
+/* --- Основной контент --- */
 .main-wrapper {
     margin-left: var(--sidebar-w);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+}
+
+#nav-toggle:checked ~ .main-wrapper {
+    margin-left: var(--sidebar-collapsed);
 }
 
 .top-header {
-    height: 75px;
-    background: white;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    padding: 0 25px;
     position: sticky; top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.user-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-.user-role { font-size: 11px; color: #a3aed0; }
+/* --- АДАПТИВНОСТЬ (Телефоны) --- */
+@media (max-width: 991px) {
+    .sidebar {
+        left: calc(-1 * var(--sidebar-w)); /* Скрываем за экран */
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    /* Когда нажат чекбокс на мобилке — показываем сайдбар как оверлей */
+    #nav-toggle:checked ~ .sidebar {
+        left: 0;
+        width: var(--sidebar-w) !important;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.3);
+    }
+
+    /* На мобилке показываем текст всегда, если сайдбар открыт */
+    #nav-toggle:checked ~ .sidebar .link-text,
+    #nav-toggle:checked ~ .sidebar .logo-text,
+    #nav-toggle:checked ~ .sidebar .nav-header {
+        display: block;
+    }
+
+    #nav-toggle:checked ~ .sidebar .nav-link {
+        justify-content: flex-start;
+        padding: 12px 18px !important;
+    }
+
+    /* Фон-затемнение при открытии меню на мобилке */
+    #nav-toggle:checked ~ .mobile-overlay {
+        display: block;
+    }
+}
+
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1040;
+}
 
 .user-circle {
-    width: 45px; height: 45px;
+    width: 40px; height: 40px;
     background: var(--primary);
     border-radius: 50%; color: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; cursor: pointer;
-    border: 3px solid #f4f7fe;
 }
-
-/* Переключатель сайдбара */
-#nav-toggle:checked ~ .sidebar { width: var(--sidebar-collapsed); }
-#nav-toggle:checked ~ .sidebar .link-text,
-#nav-toggle:checked ~ .sidebar .logo-text,
-#nav-toggle:checked ~ .sidebar .nav-header { display: none; }
-#nav-toggle:checked ~ .main-wrapper { margin-left: var(--sidebar-collapsed); }
-
-#nav-toggle:checked ~ .sidebar .toggle-btn i { transform: rotate(180deg); }

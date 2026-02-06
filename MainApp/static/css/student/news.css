@@ -1,0 +1,58 @@
+/* --- ГОРЗОНТАЛЬНЫЕ КАРТОЧКИ НОВОСТЕЙ --- */
+
+.news-card-wide {
+    transition: all 0.3s ease;
+    min-height: 220px;
+}
+
+.news-card-wide:hover {
+    transform: translateX(10px); /* Слегка сдвигается вправо при наведении */
+    box-shadow: 0 15px 35px rgba(27, 37, 89, 0.1) !important;
+}
+
+/* Контейнер для фото слева */
+.news-img-container {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem 0 0 1rem; /* Скругление только слева */
+}
+
+/* Текст новости */
+.text-navy {
+    color: #1B2559;
+}
+
+.news-full-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #2B3674;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 767.98px) {
+    .news-img-container {
+        border-radius: 1rem 1rem 0 0;
+        min-height: 200px;
+    }
+    .news-card-wide:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.bg-primary-subtle {
+    background-color: rgba(67, 24, 255, 0.1) !important;
+}
+
+.btn-primary {
+    background-color: #4318FF;
+    border: none;
+    box-shadow: 0 4px 14px rgba(67, 24, 255, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #3311db;
+    transform: translateY(-2px);
+}

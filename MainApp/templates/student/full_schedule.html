@@ -1,12 +1,12 @@
 {% extends 'base_menu/base.html' %}
 {% load static %}
 
-{% block title %}Расписание семестра{% endblock %}
+{% block title %}Расписание группы {{ group.name }}{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
+<link rel="stylesheet" href="{% static 'css/student/schedule.css' %}">
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <h3 class="fw-bold text-navy mb-4">Расписание группы {{ group.name }}</h3>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
@@ -14,27 +14,38 @@
         <div class="col">
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-header bg-white border-0 py-3 px-4">
-                    <h5 class="fw-bold text-primary mb-0">{{ day.lesson_day|date:"l" }}</h5>
+                    <h5 class="fw-bold text-primary mb-0 text-capitalize">{{ day.lesson_day|date:"l" }}</h5>
                     <small class="text-muted">{{ day.lesson_day|date:"d F Y" }}</small>
                 </div>
                 <div class="card-body px-4 pb-4">
                     {% for lesson in day.lessons.all %}
-                    <div class="d-flex align-items-center mb-3 last-child-mb-0">
+                    <div class="lesson-item d-flex align-items-center mb-3 p-2 rounded-3"
+                         onclick="location.href='{% url 'lesson_detail' lesson.id %}'"
+                         style="cursor: pointer;">
+
                         <div class="me-3 text-center" style="min-width: 50px;">
                             <div class="fw-bold text-navy small">{{ lesson.start_time|time:"H:i" }}</div>
                             <div class="text-muted" style="font-size: 10px;">{{ lesson.end_time|time:"H:i" }}</div>
                         </div>
-                        <div class="ps-3 border-start border-2 border-primary-subtle">
+
+                        <div class="ps-3 border-start border-2 border-primary-subtle flex-grow-1">
                             <div class="fw-bold small text-navy">{{ lesson.title }}</div>
-                            <div class="text-muted" style="font-size: 11px;">{{ lesson.get_lesson_type_display }}</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted" style="font-size: 11px;">{{ lesson.get_lesson_type_display }}</span>
+                                <i class="bi bi-chevron-right text-primary opacity-50 small"></i>
+                            </div>
                         </div>
                     </div>
+                    {% empty %}
+                    <p class="text-muted small text-center">Занятий нет</p>
                     {% endfor %}
                 </div>
             </div>
         </div>
         {% empty %}
-        <p>Расписание еще не составлено.</p>
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">Расписание еще не составлено.</p>
+        </div>
         {% endfor %}
     </div>
 </div>

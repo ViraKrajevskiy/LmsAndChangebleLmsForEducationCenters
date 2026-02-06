@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import models
-
+from datetime import datetime
 from MainApp.validators.file_photo_validators import validate_file_extension
 
 
@@ -47,7 +47,7 @@ class ExamSubmission(models.Model):
         validators=[validate_file_extension],
         null=True,
         blank=True
-    )    
+    )
     photo = models.ImageField(upload_to='exam_submissions/', blank=True, null=True)
     submission_date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(blank=True, null=True)
@@ -58,10 +58,23 @@ class ExamSubmission(models.Model):
         verbose_name_plural = "Ответы студентов на экзамены"
 
     def clean(self):
-        # Проверка дедлайна: нельзя сдавать после конца экзамена
-        exam_end = timezone.datetime.combine(self.exam.date, self.exam.end_time)
-        if timezone.now() > exam_end:
-            raise ValidationError("Срок сдачи экзамена истёк. Вы не можете загрузить ответ.")
+            super().clean()
+
+            # Получаем текущее время (aware)
+            now = timezone.now()
+
+            # 1. Проверяем, существует ли связанный экзамен
+            if hasattr(self, 'exam') and self.exam:
+                # 2. Соединяем дату экзамена и время окончания в один объект datetime
+                exam_end_datetime = timezone.make_aware(
+                    datetime.combine(self.exam.date, self.exam.end_time)
+                )
+
+                # 3. Сравниваем: если сейчас время уже больше, чем время окончания экзамена
+                if now > exam_end_datetime:
+                    raise ValidationError(
+                        f"Время сдачи экзамена истекло! Экзамен завершился в {self.exam.end_time}."
+                    )
 
     def save(self, *args, **kwargs):
         self.clean()

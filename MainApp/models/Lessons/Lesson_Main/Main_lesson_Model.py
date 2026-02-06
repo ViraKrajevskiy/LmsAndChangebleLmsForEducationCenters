@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from MainApp.validators.file_photo_validators import validate_file_extension
+
+
 class LessonMain(models.Model):
     lesson_day = models.DateField()
     group = models.ForeignKey("Group", on_delete=models.CASCADE)  # расписание для группы
@@ -14,6 +17,7 @@ class Lesson(models.Model):
         ('practice', 'Практика'),
         ('lab', 'Лабораторная'),
     ]
+    can_upload = models.BooleanField(default=True, verbose_name="Разрешить загрузку материалов")
     main = models.ForeignKey(LessonMain,on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=50)
     lesson_topick = models.TextField(max_length=200)
@@ -47,3 +51,18 @@ class Lesson(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.get_lesson_type_display()})"
+
+
+class LessonMaterial(models.Model):
+    lesson = models.ForeignKey("Lesson", on_delete=models.CASCADE, related_name='materials')
+    student = models.ForeignKey("StudentProfile", on_delete=models.CASCADE)
+    file = models.FileField(upload_to="lesson_materials/%Y/%m/%d/", validators=[validate_file_extension])
+    title = models.CharField(max_length=100, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Материал урока"
+        verbose_name_plural = "Материалы уроков"
+
+    def __str__(self):
+        return f"{self.student.user.username} - {self.lesson.title}"

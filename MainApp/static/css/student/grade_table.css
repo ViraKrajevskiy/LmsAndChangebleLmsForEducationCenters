@@ -1,0 +1,61 @@
+/* static/css/grade_table.css */
+
+.text-navy { color: #1B2559; }
+
+.journal-container {
+    max-height: 80vh;
+    overflow-x: auto;
+}
+
+.sticky-subject {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    min-width: 250px;
+    border-right: 2px solid #F4F7FE !important;
+    box-shadow: 5px 0 10px rgba(0,0,0,0.02);
+}
+
+.date-header {
+    background: #FAFCFF;
+    min-width: 80px;
+}
+
+.matrix-cell {
+    height: 45px;
+    width: 45px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+/* Цвета оценок */
+.cell-high { background: #05CD99; color: white; box-shadow: 0 4px 10px rgba(5, 205, 153, 0.3); }
+.cell-mid { background: #4318FF; color: white; box-shadow: 0 4px 10px rgba(67, 24, 255, 0.3); }
+.cell-low { background: #EE5D50; color: white; box-shadow: 0 4px 10px rgba(238, 93, 80, 0.3); }
+
+.matrix-empty { color: #CBD5E0; font-size: 11px; font-weight: 600; }
+
+/* Кастомные бейджи */
+.badge-custom { padding: 4px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase; }
+.bc-primary { background: #E2E8F0; color: #475569; }
+.bc-info { background: #E0F2FE; color: #0369A1; }
+.bc-warning { background: #FEF3C7; color: #92400E; }
+
+.comment-bubble {
+    background: #F8F9FF;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #707EAE;
+    border: 1px solid #EDF2F7;
+}
+
+.table-bordered > :not(caption) > * > * {
+    border-width: 0 0 1px 0;
+    border-color: #F4F7FE;
+}
